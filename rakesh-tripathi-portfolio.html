@@ -7,6 +7,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7L1ZDXTQH7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7L1ZDXTQH7');
+</script>
 
 <!--
   COLOR PALETTE RATIONALE:
@@ -1579,6 +1587,7 @@ caseData['jagbros'] = {
 // MODAL CONTROLS
 // ==========================================
 function openContactModal() {
+  gtag('event', 'contact_modal_open', { event_category: 'engagement', event_label: 'Send Me a Message' });
   var el = document.getElementById('contact-modal');
   if (!el) return;
   var form = document.getElementById('contact-form');
@@ -1596,6 +1605,7 @@ function openContactModal() {
 
 function openResumeModal(e) {
   if (e && e.preventDefault) e.preventDefault();
+  gtag('event', 'cv_modal_open', { event_category: 'engagement', event_label: 'Download CV' });
   var el = document.getElementById('resume-modal');
   if (!el) return;
   var form = document.getElementById('resume-form');
@@ -1677,6 +1687,7 @@ function submitContact(e) {
   );
   var firstName = data.name ? data.name.trim().split(' ')[0] : '';
   var header = document.getElementById('contact-modal-header');
+  gtag('event', 'contact_form_submit', { event_category: 'conversion', event_label: 'Contact Form' });
   if (form) form.style.display = 'none';
   if (header) header.style.display = 'none';
   if (success) {
@@ -1709,6 +1720,7 @@ function submitResume(e) {
   );
   var firstName = data.name ? data.name.trim().split(' ')[0] : '';
   var header = document.getElementById('resume-modal-header');
+  gtag('event', 'cv_download', { event_category: 'conversion', event_label: 'CV Downloaded' });
   if (form) form.style.display = 'none';
   if (header) header.style.display = 'none';
   if (success) {
@@ -1729,6 +1741,7 @@ function submitResume(e) {
 function openDetail(key) {
   var d = caseData[key];
   if (!d) return;
+  gtag('event', 'case_study_open', { event_category: 'engagement', event_label: key });
 
   var crumb = document.getElementById('detail-crumb');
   if (crumb) crumb.textContent = d.company;
