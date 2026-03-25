@@ -1580,6 +1580,12 @@ caseData['jagbros'] = {
 function openContactModal() {
   var el = document.getElementById('contact-modal');
   if (!el) return;
+  var form = document.getElementById('contact-form');
+  var success = document.getElementById('contact-success');
+  var btn = form ? form.querySelector('button[type="submit"]') : null;
+  if (form) { form.reset(); form.style.display = ''; }
+  if (success) { success.style.display = 'none'; success.classList.remove('show'); success.innerHTML = ''; }
+  if (btn) { btn.disabled = false; btn.textContent = 'Send Message \u2192'; }
   el.style.cssText = 'display:flex !important; visibility:visible !important; opacity:1 !important; pointer-events:all !important;';
   el.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1589,6 +1595,12 @@ function openResumeModal(e) {
   if (e && e.preventDefault) e.preventDefault();
   var el = document.getElementById('resume-modal');
   if (!el) return;
+  var form = document.getElementById('resume-form');
+  var success = document.getElementById('resume-success');
+  var btn = form ? form.querySelector('button[type="submit"]') : null;
+  if (form) { form.reset(); form.style.display = ''; }
+  if (success) { success.style.display = 'none'; success.classList.remove('show'); success.innerHTML = ''; }
+  if (btn) { btn.disabled = false; btn.textContent = 'Download CV \u2192'; }
   el.style.cssText = 'display:flex !important; visibility:visible !important; opacity:1 !important; pointer-events:all !important;';
   el.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1693,10 +1705,18 @@ function submitResume(e) {
   if (success) {
     success.innerHTML = '<div class="ty-check">✓</div>'
       + '<div class="ty-title">You\'re all set' + (firstName ? ', ' + firstName : '') + '!</div>'
-      + '<div class="ty-sub">I\'ve noted your request.<br>Expect to hear from me soon.</div>';
+      + '<div class="ty-sub">Your CV is downloading now.<br>I\'ll be in touch soon.</div>';
     success.classList.add('show');
     success.style.display = 'block';
   }
+  setTimeout(function() {
+    var a = document.createElement('a');
+    a.href = 'Rakesh-Tripathi-Resume.pdf';
+    a.download = 'Rakesh-Tripathi-Resume.pdf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }, 600);
 }
 
 // ==========================================
