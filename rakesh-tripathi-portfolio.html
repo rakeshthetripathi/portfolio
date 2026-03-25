@@ -746,10 +746,30 @@ footer a:hover { text-decoration: underline; }
 }
 .btn-submit:hover { background: var(--royal-mid); }
 .form-success {
-  display: none; background: #e8f5f3; border-left: 4px solid var(--teal);
-  padding: 16px 18px; border-radius: 4px; font-size: 0.95rem;
-  color: var(--teal); margin-top: 16px;
+  display: none; text-align: center; padding: 32px 16px; margin-top: 8px;
 }
+@keyframes tyFadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes tyCheckPop {
+  0%   { opacity: 0; transform: scale(0.2); }
+  70%  { transform: scale(1.15); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.form-success.show { animation: tyFadeUp 0.45s ease forwards; }
+.ty-check {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 64px; height: 64px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), #2dd4bf);
+  color: white; font-size: 1.8rem; margin-bottom: 18px;
+  animation: tyCheckPop 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.1s both;
+}
+.ty-title {
+  font-size: 1.35rem; font-weight: 700; color: var(--royal-dark);
+  margin-bottom: 8px; font-family: 'Playfair Display', serif;
+}
+.ty-sub { font-size: 0.88rem; color: rgba(0,0,0,0.45); line-height: 1.5; }
 
 /* ─────────────────────────────
    DETAIL / CASE STUDY PAGE
@@ -1379,9 +1399,7 @@ footer a:hover { text-decoration: underline; }
       </div>
       <button type="submit" class="btn-submit">Send Message →</button>
     </form>
-    <div class="form-success" id="contact-success">
-      ✓ Thanks! Your message has been noted. I'll get back to you soon at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2250434947514a0c564a4756504b5243564a4b62454f434b4e0c414d4f">[email&#160;protected]</a>
-    </div>
+    <div class="form-success" id="contact-success"></div>
   </div>
 </div>
 
@@ -1418,9 +1436,7 @@ footer a:hover { text-decoration: underline; }
       </div>
       <button type="submit" class="btn-submit">Download CV →</button>
     </form>
-    <div class="form-success" id="resume-success">
-      ✓ Thank you! Your download is starting now.
-    </div>
+    <div class="form-success" id="resume-success"></div>
   </div>
 </div>
 
@@ -1642,8 +1658,15 @@ function submitContact(e) {
     'https://docs.google.com/forms/d/e/1FAIpQLSf0BgYKL5YKhkL7J8xnt7EHObAx8Iz_hurhNvbJuRvOP7xIBQ/formResponse',
     { 'entry.658257863': data.name, 'entry.1926968587': data.email, 'entry.1915522277': data.message }
   );
+  var firstName = data.name ? data.name.trim().split(' ')[0] : '';
   if (form) form.style.display = 'none';
-  if (success) success.style.display = 'block';
+  if (success) {
+    success.innerHTML = '<div class="ty-check">✓</div>'
+      + '<div class="ty-title">Thank you' + (firstName ? ', ' + firstName : '') + '!</div>'
+      + '<div class="ty-sub">Your message is with me.<br>I\'ll get back to you within 24\u201348 hours.</div>';
+    success.classList.add('show');
+    success.style.display = 'block';
+  }
 }
 
 function submitResume(e) {
@@ -1665,8 +1688,15 @@ function submitResume(e) {
     'https://docs.google.com/forms/d/e/1FAIpQLSdbUqRFFTgCpZFLnp1Zwjc9COtT6qqadKnAn7Mx0b3Twtp3rw/formResponse',
     { 'entry.658257863': data.name, 'entry.1926968587': data.email, 'entry.1915522277': data.organization, 'entry.306570581': data.reason }
   );
+  var firstName = data.name ? data.name.trim().split(' ')[0] : '';
   if (form) form.style.display = 'none';
-  if (success) success.style.display = 'block';
+  if (success) {
+    success.innerHTML = '<div class="ty-check">✓</div>'
+      + '<div class="ty-title">You\'re all set' + (firstName ? ', ' + firstName : '') + '!</div>'
+      + '<div class="ty-sub">I\'ve noted your request.<br>Expect to hear from me soon.</div>';
+    success.classList.add('show');
+    success.style.display = 'block';
+  }
 }
 
 // ==========================================
