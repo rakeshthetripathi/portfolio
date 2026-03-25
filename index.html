@@ -335,13 +335,23 @@ nav {
 
 /* Hero scroll hint */
 .hero-scroll {
-  position: absolute; bottom: 28px; left: 70px; z-index: 5;
-  display: flex; align-items: center; gap: 10px;
-  color: rgba(255,255,255,0.4); font-size: 0.95rem; letter-spacing: 0.15em;
-  text-transform: uppercase; animation: fadeIn 1s ease 1.5s both;
+  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 5;
+  display: flex; align-items: center;
+  animation: fadeIn 1s ease 1.5s both;
 }
-.scroll-line {
-  width: 32px; height: 1px; background: rgba(255,255,255,0.3);
+.scroll-mouse {
+  width: 24px; height: 38px; border: 2px solid rgba(255,255,255,0.35);
+  border-radius: 12px; position: relative;
+}
+.scroll-mouse::before {
+  content: ''; position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
+  width: 3px; height: 7px; background: rgba(255,255,255,0.6);
+  border-radius: 2px; animation: scrollWheel 1.6s ease-in-out infinite;
+}
+@keyframes scrollWheel {
+  0%   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  80%  { opacity: 0; transform: translateX(-50%) translateY(14px); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(14px); }
 }
 
 /* ─────────────────────────────
@@ -1018,8 +1028,7 @@ footer a:hover { text-decoration: underline; }
   </div>
 
   <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span>Scroll to explore</span>
+    <div class="scroll-mouse"></div>
   </div>
 </section>
 
@@ -1363,11 +1372,6 @@ footer a:hover { text-decoration: underline; }
       <button class="btn-gold" onclick="openContactModal()">Send Me a Message</button>
       <button class="btn-ghost" onclick="openResumeModal(event)">Download My CV</button>
     </div>
-    <div class="contact-info">
-      <span>📍 Noida, India</span>
-      <span>✉️ <a href="/cdn-cgi/l/email-protection#f280939997819adc869a9786809b8293869a9bb2959f939b9edc919d9f" style="color:var(--gold)"><span class="__cf_email__" data-cfemail="3240535957415a1c465a5746405b4253465a5b72555f535b5e1c515d5f">[email&#160;protected]</span></a></span>
-      <span>📞 +91 9717779006</span>
-    </div>
   </div>
 </section>
 
@@ -1375,15 +1379,13 @@ footer a:hover { text-decoration: underline; }
 <footer>
   <div>© 2026 Rakesh Kumar Tripathi. All rights reserved.</div>
   <div style="color:rgba(255,255,255,0.2)">Built with precision &amp; purpose.</div>
-  <div><a href="/cdn-cgi/l/email-protection#83f1e2e8e6f0ebadf7ebe6f7f1eaf3e2f7ebeac3e4eee2eaefade0ecee"><span class="__cf_email__" data-cfemail="bfcdded4daccd791cbd7dacbcdd6cfdecbd7d6ffd8d2ded6d391dcd0d2">[email&#160;protected]</span></a></div>
 </footer>
 
 <!-- ═══ CONTACT MODAL ═══ -->
 <div class="modal-overlay" id="contact-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('contact-modal')">✕</button>
-    <h3>Let's Talk</h3>
-    <p>Send me a message and I'll get back to you within 24–48 hours.</p>
+    <div id="contact-modal-header"><h3>Let's Talk</h3><p>Send me a message and I'll get back to you within 24–48 hours.</p></div>
     <form id="contact-form" onsubmit="submitContact(event)">
       <div class="form-field">
         <label>Your Name *</label>
@@ -1407,8 +1409,7 @@ footer a:hover { text-decoration: underline; }
 <div class="modal-overlay" id="resume-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('resume-modal')">✕</button>
-    <h3>One Quick Step</h3>
-    <p>To ensure my CV reaches the right hands, I'd love to know a little about you before sharing it.</p>
+    <div id="resume-modal-header"><h3>One Quick Step</h3><p>To ensure my CV reaches the right hands, I'd love to know a little about you before sharing it.</p></div>
     <form id="resume-form" onsubmit="submitResume(event)">
       <div class="form-field">
         <label>Your Name *</label>
@@ -1582,8 +1583,10 @@ function openContactModal() {
   if (!el) return;
   var form = document.getElementById('contact-form');
   var success = document.getElementById('contact-success');
+  var header = document.getElementById('contact-modal-header');
   var btn = form ? form.querySelector('button[type="submit"]') : null;
   if (form) { form.reset(); form.style.display = ''; }
+  if (header) header.style.display = '';
   if (success) { success.style.display = 'none'; success.classList.remove('show'); success.innerHTML = ''; }
   if (btn) { btn.disabled = false; btn.textContent = 'Send Message \u2192'; }
   el.style.cssText = 'display:flex !important; visibility:visible !important; opacity:1 !important; pointer-events:all !important;';
@@ -1597,8 +1600,10 @@ function openResumeModal(e) {
   if (!el) return;
   var form = document.getElementById('resume-form');
   var success = document.getElementById('resume-success');
+  var header = document.getElementById('resume-modal-header');
   var btn = form ? form.querySelector('button[type="submit"]') : null;
   if (form) { form.reset(); form.style.display = ''; }
+  if (header) header.style.display = '';
   if (success) { success.style.display = 'none'; success.classList.remove('show'); success.innerHTML = ''; }
   if (btn) { btn.disabled = false; btn.textContent = 'Download CV \u2192'; }
   el.style.cssText = 'display:flex !important; visibility:visible !important; opacity:1 !important; pointer-events:all !important;';
@@ -1671,7 +1676,9 @@ function submitContact(e) {
     { 'entry.658257863': data.name, 'entry.1926968587': data.email, 'entry.1915522277': data.message }
   );
   var firstName = data.name ? data.name.trim().split(' ')[0] : '';
+  var header = document.getElementById('contact-modal-header');
   if (form) form.style.display = 'none';
+  if (header) header.style.display = 'none';
   if (success) {
     success.innerHTML = '<div class="ty-check">✓</div>'
       + '<div class="ty-title">Thank you' + (firstName ? ', ' + firstName : '') + '!</div>'
@@ -1701,21 +1708,18 @@ function submitResume(e) {
     { 'entry.658257863': data.name, 'entry.1926968587': data.email, 'entry.1915522277': data.organization, 'entry.306570581': data.reason }
   );
   var firstName = data.name ? data.name.trim().split(' ')[0] : '';
+  var header = document.getElementById('resume-modal-header');
   if (form) form.style.display = 'none';
+  if (header) header.style.display = 'none';
   if (success) {
     success.innerHTML = '<div class="ty-check">✓</div>'
       + '<div class="ty-title">You\'re all set' + (firstName ? ', ' + firstName : '') + '!</div>'
-      + '<div class="ty-sub">Your CV is downloading now.<br>I\'ll be in touch soon.</div>';
+      + '<div class="ty-sub">Thank you for taking the time — it genuinely means a lot.<br>I hope my work resonates, and I look forward to connecting with you.</div>';
     success.classList.add('show');
     success.style.display = 'block';
   }
   setTimeout(function() {
-    var a = document.createElement('a');
-    a.href = 'Rakesh-Tripathi-Resume.pdf';
-    a.download = 'Rakesh-Tripathi-Resume.pdf';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    window.open('Rakesh-Tripathi-Resume.pdf', '_blank');
   }, 600);
 }
 
