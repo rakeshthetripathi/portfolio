@@ -1603,16 +1603,69 @@ function submitContact(e) {
   if (e && e.preventDefault) e.preventDefault();
   var form = document.getElementById('contact-form');
   var success = document.getElementById('contact-success');
-  if (form) form.style.display = 'none';
-  if (success) success.style.display = 'block';
+  var btn = form ? form.querySelector('button[type="submit"]') : null;
+  var inputs = form ? form.querySelectorAll('input, textarea') : [];
+  var data = {};
+  for (var i = 0; i < inputs.length; i++) {
+    if (inputs[i].type === 'text') data.name = inputs[i].value;
+    if (inputs[i].type === 'email') { data.email = inputs[i].value; data._replyto = inputs[i].value; }
+    if (inputs[i].tagName === 'TEXTAREA') data.message = inputs[i].value;
+  }
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
+  fetch('https://formspree.io/f/REPLACE_WITH_YOUR_CONTACT_FORM_ID', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(function(r) {
+    if (r.ok) {
+      if (form) form.style.display = 'none';
+      if (success) success.style.display = 'block';
+    } else {
+      if (btn) { btn.disabled = false; btn.textContent = 'Send Message \u2192'; }
+      alert('Something went wrong. Please try again.');
+    }
+  })
+  .catch(function() {
+    if (btn) { btn.disabled = false; btn.textContent = 'Send Message \u2192'; }
+    alert('Something went wrong. Please try again.');
+  });
 }
 
 function submitResume(e) {
   if (e && e.preventDefault) e.preventDefault();
   var form = document.getElementById('resume-form');
   var success = document.getElementById('resume-success');
-  if (form) form.style.display = 'none';
-  if (success) success.style.display = 'block';
+  var btn = form ? form.querySelector('button[type="submit"]') : null;
+  var inputs = form ? form.querySelectorAll('input, select') : [];
+  var data = {};
+  for (var i = 0; i < inputs.length; i++) {
+    if (inputs[i].type === 'text') data.name = inputs[i].value;
+    if (inputs[i].type === 'email') { data.email = inputs[i].value; data._replyto = inputs[i].value; }
+    if (inputs[i].tagName === 'SELECT') data.reason = inputs[i].value;
+  }
+  var orgInput = form ? form.querySelectorAll('input[type="text"]')[1] : null;
+  if (orgInput) data.organization = orgInput.value;
+  data._subject = 'CV Download Request from ' + (data.name || 'Website Visitor');
+  if (btn) { btn.disabled = true; btn.textContent = 'Processing\u2026'; }
+  fetch('https://formspree.io/f/REPLACE_WITH_YOUR_RESUME_FORM_ID', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(function(r) {
+    if (r.ok) {
+      if (form) form.style.display = 'none';
+      if (success) success.style.display = 'block';
+    } else {
+      if (btn) { btn.disabled = false; btn.textContent = 'Download CV \u2192'; }
+      alert('Something went wrong. Please try again.');
+    }
+  })
+  .catch(function() {
+    if (btn) { btn.disabled = false; btn.textContent = 'Download CV \u2192'; }
+    alert('Something went wrong. Please try again.');
+  });
 }
 
 // ==========================================
@@ -1643,7 +1696,19 @@ function openDetail(key) {
       + '<div class="detail-period">' + d.period + '</div>'
       + '</div>'
       + '<div class="detail-metrics">' + mHTML + '</div>'
-      + '<div class="detail-content">' + d.content + '</div>';
+      + '<div class="detail-content">' + d.content + '</div>'
+      + '<div style="background:var(--royal-dark);padding:64px 70px;text-align:center;border-top:1px solid rgba(255,255,255,0.08);">'
+      + '<p style="color:rgba(255,255,255,0.55);font-size:1rem;margin-bottom:10px;letter-spacing:0.06em;text-transform:uppercase;font-weight:600;">Interested in working together?</p>'
+      + '<p style="color:white;font-size:1.35rem;font-family:\'Roboto Slab\',serif;font-weight:700;margin-bottom:32px;">Let\'s build something great.</p>'
+      + '<div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">'
+      + '<button onclick="openContactModal()" style="background:var(--gold);color:var(--royal-dark);padding:15px 34px;border:none;border-radius:6px;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:Roboto,sans-serif;letter-spacing:0.02em;" onmouseover="this.style.background=\'var(--gold-light)\'" onmouseout="this.style.background=\'var(--gold)\'">Send me a message \u2192</button>'
+      + '<button onclick="openResumeModal(event)" style="background:transparent;color:white;padding:15px 34px;border:2px solid rgba(255,255,255,0.25);border-radius:6px;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:Roboto,sans-serif;letter-spacing:0.02em;" onmouseover="this.style.borderColor=\'var(--gold)\';this.style.color=\'var(--gold)\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,0.25)\';this.style.color=\'white\'">Download my CV</button>'
+      + '</div>'
+      + '</div>'
+      + '<footer>'
+      + '<div>\u00a9 2026 Rakesh Kumar Tripathi. All rights reserved.</div>'
+      + '<div style="color:rgba(255,255,255,0.2)">Built with precision &amp; purpose.</div>'
+      + '</footer>';
   }
 
   var dp = document.getElementById('detail-page');
