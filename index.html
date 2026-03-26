@@ -1675,7 +1675,10 @@ function submitContact(e) {
     if (success) {
       success.innerHTML = '<div class="ty-check">✓</div>'
         + '<div class="ty-title">Thank you' + (firstName ? ', ' + firstName : '') + '!</div>'
-        + '<div class="ty-sub">Your message is with me.<br>I\'ll get back to you within 24\u201348 hours.</div>';
+        + '<div class="ty-sub">Your message is with me. I\'ll get back to you within 24\u201348 hours.<br><br>'
+      + '<span style="font-size:0.82rem;color:rgba(0,0,0,0.35);">Or reach me directly &nbsp;·&nbsp; '
+      + '<a href="mailto:rakesh@thetripathi.com" style="color:inherit;">rakesh@thetripathi.com</a>'
+      + ' &nbsp;·&nbsp; +91 97177 79006</span></div>';
       success.classList.add('show');
       success.style.display = 'block';
     }
@@ -1713,7 +1716,10 @@ function submitResume(e) {
     if (success) {
       success.innerHTML = '<div class="ty-check">✓</div>'
         + '<div class="ty-title">You\'re all set' + (firstName ? ', ' + firstName : '') + '!</div>'
-        + '<div class="ty-sub">Thank you for taking the time — it genuinely means a lot.<br>I hope my work resonates, and I look forward to connecting with you.</div>';
+        + '<div class="ty-sub">Thank you for taking the time — it genuinely means a lot.<br>I hope my work resonates, and I look forward to connecting with you.<br><br>'
+      + '<span style="font-size:0.82rem;color:rgba(0,0,0,0.35);">Or reach me directly &nbsp;·&nbsp; '
+      + '<a href="mailto:rakesh@thetripathi.com" style="color:inherit;">rakesh@thetripathi.com</a>'
+      + ' &nbsp;·&nbsp; +91 97177 79006</span></div>';
       success.classList.add('show');
       success.style.display = 'block';
     }
