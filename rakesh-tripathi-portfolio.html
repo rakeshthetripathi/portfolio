@@ -1649,32 +1649,6 @@ for (var oi = 0; oi < overlays.length; oi++) {
 // ==========================================
 // FORM SUBMISSIONS
 // ==========================================
-function submitToGoogleForm(actionUrl, fields) {
-  var iframe = document.getElementById('gf-hidden-iframe');
-  if (!iframe) {
-    iframe = document.createElement('iframe');
-    iframe.id = 'gf-hidden-iframe';
-    iframe.name = 'gf-hidden-iframe';
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-  }
-  var gform = document.createElement('form');
-  gform.method = 'POST';
-  gform.action = actionUrl;
-  gform.target = 'gf-hidden-iframe';
-  gform.style.display = 'none';
-  Object.keys(fields).forEach(function(name) {
-    var input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = name;
-    input.value = fields[name] || '';
-    gform.appendChild(input);
-  });
-  document.body.appendChild(gform);
-  gform.submit();
-  document.body.removeChild(gform);
-}
-
 function submitContact(e) {
   if (e && e.preventDefault) e.preventDefault();
   var form = document.getElementById('contact-form');
@@ -1688,22 +1662,27 @@ function submitContact(e) {
     if (inputs[i].tagName === 'TEXTAREA') data.message = inputs[i].value;
   }
   if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
-  submitToGoogleForm(
-    'https://docs.google.com/forms/d/e/1FAIpQLSf0BgYKL5YKhkL7J8xnt7EHObAx8Iz_hurhNvbJuRvOP7xIBQ/formResponse',
-    { 'entry.658257863': data.name, 'entry.1926968587': data.email, 'entry.1915522277': data.message }
-  );
-  var firstName = data.name ? data.name.trim().split(' ')[0] : '';
-  var header = document.getElementById('contact-modal-header');
-  gtag('event', 'contact_form_submit', { event_category: 'conversion', event_label: 'Contact Form' });
-  if (form) form.style.display = 'none';
-  if (header) header.style.display = 'none';
-  if (success) {
-    success.innerHTML = '<div class="ty-check">✓</div>'
-      + '<div class="ty-title">Thank you' + (firstName ? ', ' + firstName : '') + '!</div>'
-      + '<div class="ty-sub">Your message is with me.<br>I\'ll get back to you within 24\u201348 hours.</div>';
-    success.classList.add('show');
-    success.style.display = 'block';
-  }
+  fetch('https://formspree.io/f/mwvwknqw', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(function(r) {
+    var firstName = data.name ? data.name.trim().split(' ')[0] : '';
+    var header = document.getElementById('contact-modal-header');
+    gtag('event', 'contact_form_submit', { event_category: 'conversion', event_label: 'Contact Form' });
+    if (form) form.style.display = 'none';
+    if (header) header.style.display = 'none';
+    if (success) {
+      success.innerHTML = '<div class="ty-check">✓</div>'
+        + '<div class="ty-title">Thank you' + (firstName ? ', ' + firstName : '') + '!</div>'
+        + '<div class="ty-sub">Your message is with me.<br>I\'ll get back to you within 24\u201348 hours.</div>';
+      success.classList.add('show');
+      success.style.display = 'block';
+    }
+  }).catch(function() {
+    if (btn) { btn.disabled = false; btn.textContent = 'Send Message \u2192'; }
+    alert('Something went wrong. Please try again.');
+  });
 }
 
 function submitResume(e) {
@@ -1721,25 +1700,28 @@ function submitResume(e) {
   var orgInput = form ? form.querySelectorAll('input[type="text"]')[1] : null;
   if (orgInput) data.organization = orgInput.value;
   if (btn) { btn.disabled = true; btn.textContent = 'Processing\u2026'; }
-  submitToGoogleForm(
-    'https://docs.google.com/forms/d/e/1FAIpQLSdbUqRFFTgCpZFLnp1Zwjc9COtT6qqadKnAn7Mx0b3Twtp3rw/formResponse',
-    { 'entry.658257863': data.name, 'entry.1926968587': data.email, 'entry.1915522277': data.organization, 'entry.306570581': data.reason }
-  );
-  var firstName = data.name ? data.name.trim().split(' ')[0] : '';
-  var header = document.getElementById('resume-modal-header');
-  gtag('event', 'cv_download', { event_category: 'conversion', event_label: 'CV Downloaded' });
-  if (form) form.style.display = 'none';
-  if (header) header.style.display = 'none';
-  if (success) {
-    success.innerHTML = '<div class="ty-check">✓</div>'
-      + '<div class="ty-title">You\'re all set' + (firstName ? ', ' + firstName : '') + '!</div>'
-      + '<div class="ty-sub">Thank you for taking the time — it genuinely means a lot.<br>I hope my work resonates, and I look forward to connecting with you.</div>';
-    success.classList.add('show');
-    success.style.display = 'block';
-  }
-  setTimeout(function() {
-    window.open('Rakesh-Tripathi-Resume.pdf', '_blank');
-  }, 600);
+  fetch('https://formspree.io/f/xqegkddz', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(function(r) {
+    var firstName = data.name ? data.name.trim().split(' ')[0] : '';
+    var header = document.getElementById('resume-modal-header');
+    gtag('event', 'cv_download', { event_category: 'conversion', event_label: 'CV Downloaded' });
+    if (form) form.style.display = 'none';
+    if (header) header.style.display = 'none';
+    if (success) {
+      success.innerHTML = '<div class="ty-check">✓</div>'
+        + '<div class="ty-title">You\'re all set' + (firstName ? ', ' + firstName : '') + '!</div>'
+        + '<div class="ty-sub">Thank you for taking the time — it genuinely means a lot.<br>I hope my work resonates, and I look forward to connecting with you.</div>';
+      success.classList.add('show');
+      success.style.display = 'block';
+    }
+    setTimeout(function() { window.open('Rakesh-Tripathi-Resume.pdf', '_blank'); }, 600);
+  }).catch(function() {
+    if (btn) { btn.disabled = false; btn.textContent = 'Download CV \u2192'; }
+    alert('Something went wrong. Please try again.');
+  });
 }
 
 // ==========================================
