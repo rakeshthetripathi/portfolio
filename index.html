@@ -1667,6 +1667,7 @@ function submitContact(e) {
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   }).then(function(r) {
+    if (!r.ok) { if (btn) { btn.disabled = false; btn.textContent = 'Send Message \u2192'; } alert('Something went wrong. Please try again.'); return; }
     var firstName = data.name ? data.name.trim().split(' ')[0] : '';
     var header = document.getElementById('contact-modal-header');
     gtag('event', 'contact_form_submit', { event_category: 'conversion', event_label: 'Contact Form' });
@@ -1708,6 +1709,7 @@ function submitResume(e) {
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   }).then(function(r) {
+    if (!r.ok) { if (btn) { btn.disabled = false; btn.textContent = 'Download CV \u2192'; } alert('Something went wrong. Please try again.'); return; }
     var firstName = data.name ? data.name.trim().split(' ')[0] : '';
     var header = document.getElementById('resume-modal-header');
     gtag('event', 'cv_download', { event_category: 'conversion', event_label: 'CV Downloaded' });
