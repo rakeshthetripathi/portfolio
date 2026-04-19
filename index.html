@@ -3,7 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rakesh Kumar Tripathi | Senior Product Manager</title>
+<title>Rakesh Kumar Tripathi – Senior Product Manager & Strategic Leader</title>
+<meta name="description" content="Senior Product Manager specialized in driving high-impact growth for Fintech and E-commerce. Expert in Product Strategy, Leadership, and scalable SaaS solutions.">
+<meta name="keywords" content="Rakesh Kumar Tripathi, Senior Product Manager, Product Strategy, Strategic Leader, Fintech Product Manager, SaaS Strategy, Product Growth">
+<link rel="canonical" href="https://thetripathi.com/">
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thetripathi.com/">
+<meta property="og:title" content="Rakesh Kumar Tripathi – Senior Product Manager & Strategic Leader">
+<meta property="og:description" content="Expert in Product Strategy, Leadership, and Growth. Explore my latest projects and impact.">
+<meta property="og:image" content="https://thetripathi.com/assets/img/rakesh-tripathi-social.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@400;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -700,6 +709,9 @@ footer {
 }
 footer a { color: var(--gold); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
+.footer-social { display: flex; gap: 20px; align-items: center; }
+.footer-social a { color: rgba(255,255,255,0.6); font-weight: 500; font-size: 0.8rem; transition: color 0.2s; }
+.footer-social a:hover { color: var(--gold); text-decoration: none; }
 
 /* ─────────────────────────────
    MODALS
@@ -1393,6 +1405,10 @@ footer a:hover { text-decoration: underline; }
 <!-- ═══ FOOTER ═══ -->
 <footer>
   <div>© 2026 Rakesh Kumar Tripathi. All rights reserved.</div>
+  <div class="footer-social">
+    <a href="https://www.linkedin.com/in/rakesh-tripathi/" target="_blank" onclick="gtag('event', 'social_click', { event_category: 'engagement', event_label: 'LinkedIn' })">LinkedIn</a>
+    <a href="mailto:rakesh@thetripathi.com" onclick="gtag('event', 'social_click', { event_category: 'engagement', event_label: 'Email' })">rakesh@thetripathi.com</a>
+  </div>
   <div style="color:rgba(255,255,255,0.2)">Built with precision &amp; purpose.</div>
 </footer>
 
@@ -1662,7 +1678,13 @@ function submitContact(e) {
     if (inputs[i].tagName === 'TEXTAREA') data.message = inputs[i].value;
   }
   if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
-  fetch('https://formspree.io/f/mwvwknqw', {
+  
+  // Update data object with Web3Forms requirements
+  data.access_key = '3cb34389-f1e9-4cfe-ac93-3cab07a691a8';
+  data.subject = 'New Portfolio Message from ' + (data.name || 'Visitor');
+  data.from_name = 'Portfolio Site';
+
+  fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
@@ -1704,7 +1726,13 @@ function submitResume(e) {
   var orgInput = form ? form.querySelectorAll('input[type="text"]')[1] : null;
   if (orgInput) data.organization = orgInput.value;
   if (btn) { btn.disabled = true; btn.textContent = 'Processing\u2026'; }
-  fetch('https://formspree.io/f/xqegkddz', {
+
+  // Update data object with Web3Forms requirements
+  data.access_key = '3cb34389-f1e9-4cfe-ac93-3cab07a691a8';
+  data.subject = 'CV Download Request: ' + (data.name || 'Visitor');
+  data.from_name = 'Portfolio Site';
+
+  fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
@@ -1772,6 +1800,10 @@ function openDetail(key) {
       + '</div>'
       + '<footer>'
       + '<div>\u00a9 2026 Rakesh Kumar Tripathi. All rights reserved.</div>'
+      + '<div style="display:flex;gap:20px;align-items:center;">'
+      + '<a href="https://www.linkedin.com/in/rakesh-tripathi/" target="_blank" onclick="gtag(\'event\', \'social_click\', { event_category: \'engagement\', event_label: \'LinkedIn\' })" style="color:rgba(255,255,255,0.6);text-decoration:none;">LinkedIn</a>'
+      + '<a href="mailto:rakesh@thetripathi.com" onclick="gtag(\'event\', \'social_click\', { event_category: \'engagement\', event_label: \'Email\' })" style="color:rgba(255,255,255,0.6);text-decoration:none;">rakesh@thetripathi.com</a>'
+      + '</div>'
       + '<div style="color:rgba(255,255,255,0.2)">Built with precision &amp; purpose.</div>'
       + '</footer>';
   }
