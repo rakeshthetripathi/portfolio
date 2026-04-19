@@ -1671,12 +1671,13 @@ function submitContact(e) {
   var success = document.getElementById('contact-success');
   var btn = form ? form.querySelector('button[type="submit"]') : null;
   
-  // Collect data properly using names
-  var formData = new FormData(form);
-  var data = Object.fromEntries(formData);
-  
-  // Add Timestamp
-  data.timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' });
+  // Manual data collection for maximum reliability
+  var data = {
+    name: form.querySelector('[name="name"]').value,
+    email: form.querySelector('[name="email"]').value,
+    message: form.querySelector('[name="message"]').value,
+    timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' })
+  };
   
   if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
   
@@ -1718,12 +1719,14 @@ function submitResume(e) {
   var success = document.getElementById('resume-success');
   var btn = form ? form.querySelector('button[type="submit"]') : null;
   
-  // Collect data properly using names
-  var formData = new FormData(form);
-  var data = Object.fromEntries(formData);
-
-  // Add Timestamp
-  data.timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' });
+  // Manual data collection for maximum reliability
+  var data = {
+    name: form.querySelector('[name="name"]').value,
+    email: form.querySelector('[name="email"]').value,
+    organization: form.querySelector('[name="organization"]').value,
+    reason: form.querySelector('[name="reason"]').value,
+    timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' })
+  };
 
   if (btn) { btn.disabled = true; btn.textContent = 'Processing\u2026'; }
 
