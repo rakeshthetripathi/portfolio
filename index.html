@@ -1420,15 +1420,15 @@ footer a:hover { text-decoration: underline; }
     <form id="contact-form" onsubmit="submitContact(event)">
       <div class="form-field">
         <label>Your Name *</label>
-        <input type="text" placeholder="Your full name" required>
+        <input type="text" name="name" placeholder="Your full name" required>
       </div>
       <div class="form-field">
         <label>Your Email *</label>
-        <input type="email" placeholder="your@email.com" required>
+        <input type="email" name="email" placeholder="your@email.com" required>
       </div>
       <div class="form-field">
         <label>Your Message *</label>
-        <textarea placeholder="Tell me what's on your mind…" required></textarea>
+        <textarea name="message" placeholder="Tell me what's on your mind…" required></textarea>
       </div>
       <button type="submit" class="btn-submit">Send Message →</button>
     </form>
@@ -1670,13 +1670,11 @@ function submitContact(e) {
   var form = document.getElementById('contact-form');
   var success = document.getElementById('contact-success');
   var btn = form ? form.querySelector('button[type="submit"]') : null;
-  var inputs = form ? form.querySelectorAll('input, textarea') : [];
-  var data = {};
-  for (var i = 0; i < inputs.length; i++) {
-    if (inputs[i].type === 'text') data.name = inputs[i].value;
-    if (inputs[i].type === 'email') data.email = inputs[i].value;
-    if (inputs[i].tagName === 'TEXTAREA') data.message = inputs[i].value;
-  }
+  
+  // Collect data properly using names
+  var formData = new FormData(form);
+  var data = Object.fromEntries(formData);
+  
   if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
   
   // Update data object with Web3Forms requirements
@@ -1716,15 +1714,11 @@ function submitResume(e) {
   var form = document.getElementById('resume-form');
   var success = document.getElementById('resume-success');
   var btn = form ? form.querySelector('button[type="submit"]') : null;
-  var inputs = form ? form.querySelectorAll('input, select') : [];
-  var data = {};
-  for (var i = 0; i < inputs.length; i++) {
-    if (inputs[i].type === 'text') data.name = inputs[i].value;
-    if (inputs[i].type === 'email') data.email = inputs[i].value;
-    if (inputs[i].tagName === 'SELECT') data.reason = inputs[i].value;
-  }
-  var orgInput = form ? form.querySelectorAll('input[type="text"]')[1] : null;
-  if (orgInput) data.organization = orgInput.value;
+  
+  // Collect data properly using names
+  var formData = new FormData(form);
+  var data = Object.fromEntries(formData);
+
   if (btn) { btn.disabled = true; btn.textContent = 'Processing\u2026'; }
 
   // Update data object with Web3Forms requirements
