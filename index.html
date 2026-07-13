@@ -975,11 +975,11 @@ footer a:hover { text-decoration: underline; }
 <nav>
   <div class="nav-logo">R<span>K</span>T.</div>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#timeline">Journey</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about" onclick="gtag('event','nav_click',{event_category:'navigation',event_label:'About'})">About</a></li>
+    <li><a href="#work" onclick="gtag('event','nav_click',{event_category:'navigation',event_label:'Work'})">Work</a></li>
+    <li><a href="#skills" onclick="gtag('event','nav_click',{event_category:'navigation',event_label:'Skills'})">Skills</a></li>
+    <li><a href="#timeline" onclick="gtag('event','nav_click',{event_category:'navigation',event_label:'Journey'})">Journey</a></li>
+    <li><a href="#contact" onclick="gtag('event','nav_click',{event_category:'navigation',event_label:'Contact'})">Contact</a></li>
     <li><a href="#" class="nav-cta" onclick="openResumeModal(event)">Download CV</a></li>
   </ul>
   <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
@@ -988,11 +988,11 @@ footer a:hover { text-decoration: underline; }
 </nav>
 
 <div class="mobile-menu" id="mobile-menu">
-  <a href="#about" onclick="closeMobileMenu()">About</a>
-  <a href="#work" onclick="closeMobileMenu()">Work</a>
-  <a href="#skills" onclick="closeMobileMenu()">Skills</a>
-  <a href="#timeline" onclick="closeMobileMenu()">Journey</a>
-  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+  <a href="#about" onclick="gtag('event','nav_click',{event_category:'navigation',event_label:'About (mobile)'});closeMobileMenu()">About</a>
+  <a href="#work" onclick="gtag('event','nav_click',{event_category:'navigation',event_label:'Work (mobile)'});closeMobileMenu()">Work</a>
+  <a href="#skills" onclick="gtag('event','nav_click',{event_category:'navigation',event_label:'Skills (mobile)'});closeMobileMenu()">Skills</a>
+  <a href="#timeline" onclick="gtag('event','nav_click',{event_category:'navigation',event_label:'Journey (mobile)'});closeMobileMenu()">Journey</a>
+  <a href="#contact" onclick="gtag('event','nav_click',{event_category:'navigation',event_label:'Contact (mobile)'});closeMobileMenu()">Contact</a>
   <a href="#" onclick="openResumeModal(event);closeMobileMenu()">⬇ Download CV</a>
 </div>
 
@@ -1013,7 +1013,7 @@ footer a:hover { text-decoration: underline; }
       Strategic PM with <strong>15+ years</strong> building AI-powered products across HealthTech, MedTech, EdTech and E-Commerce — turning complex challenges into <strong>scalable solutions</strong> that drive revenue, delight users, and move organisations forward.
     </p>
     <div class="hero-actions">
-      <a href="#work" class="btn-gold">Explore My Work ↓</a>
+      <a href="#work" class="btn-gold" onclick="gtag('event','hero_cta_click',{event_category:'engagement',event_label:'Explore My Work'})">Explore My Work ↓</a>
       <button class="btn-ghost" onclick="openContactModal()">Let's Connect</button>
     </div>
     <div class="hero-pwd">
@@ -1892,6 +1892,55 @@ if ('IntersectionObserver' in window) {
     sr.observe(revealEls[ri]);
   }
 }
+
+// ==========================================
+// SCROLL DEPTH TRACKING
+// ==========================================
+(function() {
+  var depthsFired = {};
+  var thresholds = [25, 50, 75, 100];
+  function getScrollDepth() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    return docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
+  }
+  window.addEventListener('scroll', function() {
+    var depth = getScrollDepth();
+    for (var i = 0; i < thresholds.length; i++) {
+      var t = thresholds[i];
+      if (depth >= t && !depthsFired[t]) {
+        depthsFired[t] = true;
+        gtag('event', 'scroll_depth', { event_category: 'engagement', event_label: t + '%', value: t });
+      }
+    }
+  }, { passive: true });
+})();
+
+// ==========================================
+// SECTION IMPRESSION TRACKING
+// ==========================================
+(function() {
+  var sectionsFired = {};
+  var sectionMap = { about: 'About', work: 'Work', skills: 'Skills', timeline: 'Journey', contact: 'Contact' };
+  if ('IntersectionObserver' in window) {
+    var sectionObs = new IntersectionObserver(function(entries) {
+      for (var i = 0; i < entries.length; i++) {
+        var entry = entries[i];
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          if (id && sectionMap[id] && !sectionsFired[id]) {
+            sectionsFired[id] = true;
+            gtag('event', 'section_view', { event_category: 'engagement', event_label: sectionMap[id] });
+          }
+        }
+      }
+    }, { threshold: 0.2 });
+    Object.keys(sectionMap).forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) sectionObs.observe(el);
+    });
+  }
+})();
 </script>
 </body>
 </html>
