@@ -113,7 +113,8 @@
   }
 
   /* ── Pop-up forms (shared by every page) ── */
-  var PDF = '/Rakesh-Tripathi-Resume.pdf', W3F = '3cb34389-f1e9-4cfe-ac93-3cab07a691a8';
+  /* Bump ?v= whenever the CV file changes: Cloudflare keeps files for 4 hours, a new address skips the old copy. */
+  var PDF = '/Rakesh-Tripathi-Resume.pdf?v=4', W3F = '3cb34389-f1e9-4cfe-ac93-3cab07a691a8';
   /* Phone number: stored reversed and split, and put together only when a thank-you message is shown, so the page source never holds it for scrapers. */
   function phone() { return ['60097', '77179', '19+'].join(' ').split('').reverse().join(''); }
   var REACH = '<span style="font-size:.82rem;opacity:.75;">Or reach me directly &nbsp;·&nbsp; <a href="mailto:rakesh@thetripathi.com" style="color:inherit;">rakesh@thetripathi.com</a> &nbsp;·&nbsp; <span class="ph">' + phone() + '</span></span>';
