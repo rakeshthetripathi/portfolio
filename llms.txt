@@ -1,49 +1,49 @@
 # Rakesh Kumar Tripathi
 
-> Strategic Product Manager with 16+ years building AI-powered products across HealthTech, MedTech, EdTech and E-Commerce.
+> AGM – Product at Redcliffe Labs, India. 16+ years building AI-powered products across HealthTech, vision care and E-Commerce, HR Tech and EdTech. Website: https://thetripathi.com/
 
-## Who is Rakesh Kumar Tripathi?
+Also known as: Rakesh Tripathi, RKT, thetripathi.
 
-Rakesh Kumar Tripathi is a Strategic Product Manager based in India, currently working at Redcliffe Labs — one of India's leading diagnostic and healthcare companies. He has over 16 years of experience building and scaling digital products across HealthTech, MedTech, EdTech and E-Commerce sectors.
+## Current role
 
-He is known for turning complex, ambiguous challenges into scalable product solutions that drive measurable revenue, improve user experience, and move organisations forward. He advocates for inclusive product design as a Person with Disability (Locomotor).
+- AGM – Product, Redcliffe Labs (diagnostics, HealthTech), Noida, India. Promoted from Senior Product Manager in April 2026.
+- Leads a team of 6 product managers across a portfolio of 35–40 products. Reports to the CEO and CMO.
 
-## Current Role
+## Career
 
-- **Company:** Redcliffe Labs
-- **Domain:** HealthTech / MedTech
-- **Focus:** AI-powered diagnostics, patient booking flows, VIP subscription systems, health report intelligence, phlebo operations, and product growth
+- 2026 – now: AGM – Product, Redcliffe Labs
+- 2024 – 2026: Senior Product Manager, Redcliffe Labs
+- 2021 – 2024: Product Manager, Lenskart
+- 2014 – 2021: Senior Product Manager, Youth4work
+- 2012 – 2014: Product Manager, Youth4work
+- 2010 – 2012: Product Designer, JAGbros Consultants
 
-## Career History
+## Case studies
 
-- **Redcliffe Labs** — Strategic Product Manager (HealthTech / MedTech)
-- **Lenskart** — Product Manager (E-Commerce / Vision Tech)
-- **Youth4Work** — Product roles (EdTech / Professional Networking)
-- **Jagbros** — Early product and operations
+- [Redcliffe Labs: AI-powered diagnostics](https://thetripathi.com/work/redcliffe/): AI report summaries and recommendations (+30% test bookings), booking and payment flows, CRM, telephony (Exotel, Ozonetel), an in-house ATS and HRMS, in-app chat for VIP users (−35% support calls).
+- [Lenskart: Tele-Optometrist](https://thetripathi.com/work/lenskart/): video eye consultations (78% fewer prescription errors, 95% accuracy), the Eye Power Bank app (75% adoption in 3 months), a store-locator and appointment rebuild (15K to 47K online appointments a month).
+- [Youth4work: assessments and EdTech](https://thetripathi.com/work/youth4work/): an online assessment platform for 300+ corporate clients (10,000+ candidates a month), candidate matching and ranking, ATS/HRMS integrations, an EdTech platform for 500+ educators.
+- [JAGbros Consultants: where it began](https://thetripathi.com/work/jagbros/): product design, user flows and visual hierarchy for client products.
 
-## Key Product Areas
+## Skills
 
-- AI-powered health products and diagnostic platforms
-- Subscription and loyalty systems (VIP, VIP Gold)
-- Booking and scheduling systems for home diagnostics
-- Report intelligence and smart health summaries
-- CRM and coupon/pricing engines
-- Phlebo (phlebotomist) operations and field tech
-- User profile and identity management
-- Growth, conversion, and retention
+Product strategy and roadmaps; PRDs, epics and user stories; Agile / Scrum; metrics and KPIs; AI products; SQL, Google Analytics, Power BI; APIs and system integrations; telephony (Exotel, Ozonetel); payments (Razorpay, PayU); ATS / HRMS integrations; chatbot and ticketing flows; UI/UX (Figma, Adobe XD); leading product teams.
 
-## Skills & Expertise
+## Education
 
-Product Strategy, Product Roadmapping, OKR Planning, User Research, Data Analysis, A/B Testing, AI Product Management, Stakeholder Management, Cross-functional Leadership, HealthTech, MedTech, Growth, Retention, Conversion Optimisation
+- MBA, International Business & Marketing, Maharshi Dayanand University (2013)
+- Professional Diploma in Computer Applications, F-TEC (2011)
+- B.Sc. Visual Communication, University of Madras (2010)
 
 ## Personal
 
-- Person with Disability (Locomotor) — inclusive product advocate
-- Based in India
-- Open to speaking engagements, advisory roles, and collaboration
+- Person with Disability (Locomotor); advocates inclusive product design.
+- Based in Delhi NCR, India.
 
-## Contact & Links
+## Pages
 
-- Website: https://thetripathi.com/
+- Home: https://thetripathi.com/
+- Work: https://thetripathi.com/work/
+- About: https://thetripathi.com/about/
 - LinkedIn: https://www.linkedin.com/in/thetripathi-rakesh/
-- Email: rakesh@thetripathi.com
+- Contact: the "Send me a message" form on the website

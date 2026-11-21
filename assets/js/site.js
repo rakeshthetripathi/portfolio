@@ -203,6 +203,42 @@
     }, function () { b.disabled = false; b.textContent = 'Download CV →'; track('form_submit_error', { event_category: 'conversion', event_label: 'CV Form' }); alert('Something went wrong. Please try again.'); });
   });
 
+  /* ── Share: the phone's own share sheet where it exists, plus LinkedIn, WhatsApp, X, email and copy link.
+     Case studies show it next to "All work"; other pages in a band above the footer. Shared links carry utm tags so GA4 shows where visits came from. */
+  (function () {
+    if (doc.body.hasAttribute('data-noshare')) return;
+    var canon = doc.querySelector('link[rel="canonical"]'); if (!canon) return;
+    var base = canon.getAttribute('href'), og = doc.querySelector('meta[property="og:title"]');
+    var title = (og && og.getAttribute('content')) || doc.title;
+    function link(src) { return base + '?utm_source=' + src + '&utm_medium=share&utm_campaign=site_share'; }
+    function enc(v) { return encodeURIComponent(v); }
+    var html = '<span class="share-l" id="share-l">Share this page</span>' +
+      (navigator.share ? '<button type="button" class="share-b" data-share="native">Share&hellip;</button>' : '') +
+      '<a class="share-b" data-share="linkedin" target="_blank" rel="noopener" href="https://www.linkedin.com/sharing/share-offsite/?url=' + enc(link('linkedin')) + '">LinkedIn</a>' +
+      '<a class="share-b" data-share="whatsapp" target="_blank" rel="noopener" href="https://wa.me/?text=' + enc(title + ' ' + link('whatsapp')) + '">WhatsApp</a>' +
+      '<a class="share-b" data-share="x" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text=' + enc(title) + '&url=' + enc(link('x')) + '">X</a>' +
+      '<a class="share-b" data-share="email" href="mailto:?subject=' + enc(title) + '&body=' + enc(link('email')) + '">Email</a>' +
+      '<button type="button" class="share-b" data-share="copy">Copy link</button>' +
+      '<span class="share-ok" role="status" aria-live="polite"></span>';
+    var box = doc.createElement('div'); box.className = 'share'; box.setAttribute('role', 'group'); box.setAttribute('aria-labelledby', 'share-l'); box.innerHTML = html;
+    var slot = doc.querySelector('.next-case');
+    if (slot) slot.appendChild(box);
+    else { var foot = doc.querySelector('footer.foot'); if (!foot) return; var band = doc.createElement('div'); band.className = 'share-band'; var w = doc.createElement('div'); w.className = 'wrap pad'; w.appendChild(box); band.appendChild(w); foot.parentNode.insertBefore(band, foot); }
+    var ok = box.querySelector('.share-ok');
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-share]'); if (!b) return;
+      var how = b.getAttribute('data-share');
+      track('share_click', { event_category: 'engagement', event_label: how });
+      if (how === 'native') { e.preventDefault(); navigator.share({ title: title, url: link('native') })['catch'](function () {}); }
+      if (how === 'copy') {
+        e.preventDefault();
+        var done = function () { ok.textContent = 'Link copied'; setTimeout(function () { ok.textContent = ''; }, 2500); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link('copy')).then(done, function () { ok.textContent = base; });
+        else ok.textContent = base;
+      }
+    });
+  })();
+
   /* ── Other events kept from the old site ── */
   doc.addEventListener('click', function (e) {
     var a = e.target.closest('[data-track]'); if (!a) return;
