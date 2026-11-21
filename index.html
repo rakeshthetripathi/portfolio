@@ -74,7 +74,7 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-7L1ZDXTQH7', { debug_mode: true });
+  gtag('config', 'G-7L1ZDXTQH7');
 </script>
 
 <!--
@@ -1489,19 +1489,19 @@ footer a:hover { text-decoration: underline; }
     <form id="resume-form" onsubmit="submitResume(event)">
       <div class="form-field">
         <label>Your Name *</label>
-        <input type="text" placeholder="Your full name" required>
+        <input type="text" name="name" placeholder="Your full name" required>
       </div>
       <div class="form-field">
         <label>Your Email *</label>
-        <input type="email" placeholder="your@email.com" required>
+        <input type="email" name="email" placeholder="your@email.com" required>
       </div>
       <div class="form-field">
         <label>Organization / Company</label>
-        <input type="text" placeholder="Where are you from?">
+        <input type="text" name="organization" placeholder="Where are you from?">
       </div>
       <div class="form-field">
         <label>Reason for Downloading *</label>
-        <select required>
+        <select name="reason" required>
           <option value="">Select a reason…</option>
           <option>Hiring / Recruitment</option>
           <option>Collaboration / Partnership</option>
